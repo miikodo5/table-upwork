@@ -1,20 +1,47 @@
-import { useState, useMemo } from "preact/hooks";
+import { useState, useMemo, useEffect } from "preact/hooks";
 import { FilterBar } from "./components/FilterBar";
 import { FeatureTable } from "./components/FeatureTable";
 import rawData from "./data/response.json";
 
 export function App() {
-    const [filters, setFilters] = useState({
-        name: "",
-        pi: "",
-        team: "",
-        owner: "",
+    const [filters, setFilters] = useState(() => {
+        try {
+            return (
+                JSON.parse(localStorage.getItem("filters")) || {
+                    name: "",
+                    pi: "",
+                    team: "",
+                    owner: "",
+                }
+            );
+        } catch {
+            return { name: "", pi: "", team: "", owner: "" };
+        }
     });
 
-    const [columnSizing, setColumnSizing] = useState({});
-    const [columnSizingInfo, setColumnSizingInfo] = useState({});
+    const [columnSizing, setColumnSizing] = useState(() => {
+        return JSON.parse(localStorage.getItem("columnSizing")) || {};
+    });
+    const [columnSizingInfo, setColumnSizingInfo] = useState(() => {
+        return JSON.parse(localStorage.getItem("columnSizingInfo")) || {};
+    });
 
     const dictionaries = rawData.dictionary;
+
+    useEffect(() => {
+        localStorage.setItem("filters", JSON.stringify(filters));
+    }, [filters]);
+
+    useEffect(() => {
+        localStorage.setItem("columnSizing", JSON.stringify(columnSizing));
+    }, [columnSizing]);
+
+    useEffect(() => {
+        localStorage.setItem(
+            "columnSizingInfo",
+            JSON.stringify(columnSizingInfo)
+        );
+    }, [columnSizingInfo]);
 
     const data = useMemo(() => {
         return rawData.features.map((feature) => ({

@@ -4,7 +4,7 @@ import {
     getCoreRowModel,
     getSortedRowModel,
 } from "@tanstack/react-table";
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import { NestedTasksTable } from "./NestedTasksTable";
 import { IconArrow } from "./IconArrow";
 
@@ -16,9 +16,17 @@ export function FeatureTable({
     columnSizingInfo,
     setColumnSizingInfo,
 }) {
-    const [expandedRows, setExpandedRows] = useState({});
+    const [expandedRows, setExpandedRows] = useState(() => {
+        try {
+            return JSON.parse(localStorage.getItem("expandedRows")) || {};
+        } catch {
+            return {};
+        }
+    });
     const [sorting, setSorting] = useState([]);
-
+    useEffect(() => {
+        localStorage.setItem("expandedRows", JSON.stringify(expandedRows));
+    }, [expandedRows]);
     const columns = [
         {
             accessorKey: "name",
@@ -41,14 +49,14 @@ export function FeatureTable({
                 ) : null,
             size: 300,
             minSize: 300,
-            maxSize: 500,
+            // maxSize: 800,
         },
         {
             accessorKey: "id",
             header: "ID",
             size: 100,
             minSize: 50,
-            maxSize: 150,
+            // maxSize: 450,
         },
         {
             accessorKey: "committed",
@@ -56,14 +64,14 @@ export function FeatureTable({
             cell: ({ getValue }) => (getValue() ? "Yes" : "No" || ""),
             size: 100,
             minSize: 50,
-            maxSize: 150,
+            // maxSize: 150,
         },
         {
             accessorKey: "wsjf",
             header: "WSJF",
             size: 60,
             minSize: 30,
-            maxSize: 100,
+            // maxSize: 100,
         },
         {
             accessorKey: "effort",
@@ -71,7 +79,7 @@ export function FeatureTable({
             cell: ({ getValue }) => getValue() + "pt" || "",
             size: 80,
             minSize: 50,
-            maxSize: 120,
+            // maxSize: 120,
         },
         {
             accessorKey: "done",
@@ -79,7 +87,7 @@ export function FeatureTable({
             cell: ({ getValue }) => (getValue() ? "Yes" : "No" || ""),
             size: 100,
             minSize: 50,
-            maxSize: 150,
+            // maxSize: 150,
         },
         {
             accessorKey: "planned_pi",
@@ -87,7 +95,7 @@ export function FeatureTable({
             size: 180,
             cell: ({ getValue }) => dictionaries.pi[getValue()] || "",
             minSize: 120,
-            maxSize: 250,
+            // maxSize: 250,
         },
         {
             accessorKey: "owner",
@@ -95,7 +103,7 @@ export function FeatureTable({
             size: 120,
             cell: ({ getValue }) => dictionaries.user[getValue()] || "",
             minSize: 80,
-            maxSize: 200,
+            // maxSize: 200,
         },
     ];
 
@@ -192,6 +200,7 @@ export function FeatureTable({
                                         className="nested-conteiner"
                                     >
                                         <NestedTasksTable
+                                            featureId={row.original.id} // ← pass the feature’s unique ID
                                             tasks={row.original.tasks}
                                             dictionaries={dictionaries}
                                         />

@@ -57,14 +57,18 @@ body {
 
 /* ─── Table Container ───────────────────────────────────────────────────────── */
 .table-container {
-    background: #ffffff;
-    overflow: hidden;
+    /* background: #ffffff; */
+    /* overflow: hidden; */
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 /* ─── Tables ────────────────────────────────────────────────────────────────── */
 table {
-    width: 100%;
+    width: auto;
+    table-layout: auto;
     border-collapse: collapse;
+    min-width: max-content;
 }
 thead {
     -webkit-user-select: none;

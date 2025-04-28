@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import {
     flexRender,
     useReactTable,
@@ -6,9 +6,44 @@ import {
     getSortedRowModel,
 } from "@tanstack/react-table";
 
-export function NestedTasksTable({ tasks, dictionaries }) {
-    const [columnSizing, setColumnSizing] = useState({});
-    const [columnSizingInfo, setColumnSizingInfo] = useState({});
+export function NestedTasksTable({ featureId, tasks, dictionaries }) {
+    const [columnSizing, setColumnSizing] = useState(() => {
+        try {
+            return (
+                JSON.parse(
+                    localStorage.getItem(`nestedColumnSizing_${featureId}`)
+                ) || {}
+            );
+        } catch {
+            return {};
+        }
+    });
+    const [columnSizingInfo, setColumnSizingInfo] = useState(() => {
+        try {
+            return (
+                JSON.parse(
+                    localStorage.getItem(`nestedColumnSizingInfo_${featureId}`)
+                ) || {}
+            );
+        } catch {
+            return {};
+        }
+    });
+
+    // Persist nested column sizes whenever they change
+    useEffect(() => {
+        localStorage.setItem(
+            `nestedColumnSizing_${featureId}`,
+            JSON.stringify(columnSizing)
+        );
+    }, [columnSizing, featureId]);
+
+    useEffect(() => {
+        localStorage.setItem(
+            `nestedColumnSizingInfo_${featureId}`,
+            JSON.stringify(columnSizingInfo)
+        );
+    }, [columnSizingInfo, featureId]);
     const [sorting, setSorting] = useState([]);
 
     const columns = [
@@ -17,14 +52,14 @@ export function NestedTasksTable({ tasks, dictionaries }) {
             header: "Tasks",
             size: 250,
             minSize: 100,
-            maxSize: 400,
+            // maxSize: 400,
         },
         {
             accessorKey: "id",
             header: "ID",
             size: 80,
             minSize: 50,
-            maxSize: 120,
+            // maxSize: 120,
         },
         {
             accessorKey: "status",
@@ -32,7 +67,7 @@ export function NestedTasksTable({ tasks, dictionaries }) {
             size: 120,
             cell: ({ getValue }) => dictionaries.status[getValue()] || "",
             minSize: 80,
-            maxSize: 200,
+            // maxSize: 200,
         },
         {
             accessorKey: "team",
@@ -40,7 +75,7 @@ export function NestedTasksTable({ tasks, dictionaries }) {
             size: 150,
             cell: ({ getValue }) => dictionaries.team[getValue()] || "",
             minSize: 100,
-            maxSize: 250,
+            // maxSize: 250,
         },
         {
             accessorKey: "owner",
@@ -48,7 +83,7 @@ export function NestedTasksTable({ tasks, dictionaries }) {
             size: 120,
             cell: ({ getValue }) => dictionaries.user[getValue()] || "",
             minSize: 80,
-            maxSize: 200,
+            // maxSize: 200,
         },
         {
             accessorKey: "iteration",
@@ -57,14 +92,14 @@ export function NestedTasksTable({ tasks, dictionaries }) {
             cell: ({ getValue }) =>
                 dictionaries.iteration[getValue()]?.pi_text || "",
             minSize: 150,
-            maxSize: 300,
+            // maxSize: 300,
         },
         {
             accessorKey: "effort",
             header: "Effort",
             size: 80,
             minSize: 50,
-            maxSize: 120,
+            // maxSize: 120,
         },
     ];
 
@@ -87,7 +122,7 @@ export function NestedTasksTable({ tasks, dictionaries }) {
     return (
         <table
             style={{
-                width: "100%",
+                width: "auto",
                 // marginTop: "8px",
                 // backgroundColor: "#fafafa",
             }}
