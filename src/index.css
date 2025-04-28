@@ -1,0 +1,186 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+/* ─── Global Reset & Body ───────────────────────────────────────────────────── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    color: #000000;
+}
+
+/* ─── Page Container ────────────────────────────────────────────────────────── */
+.page-container {
+    padding: 20px;
+}
+
+/* ─── Filter Bar ─────────────────────────────────────────────────────────────── */
+.filter-bar {
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 24px;
+    background: #ffffff;
+    /* border-radius: 4px; */
+    gap: 16px;
+    margin-bottom: 16px;
+}
+.filter-bar label {
+    font-size: 14px;
+    /* font-size: 14px; */
+    /* color: #555555; */
+    white-space: nowrap;
+}
+.filter-bar label:first-child {
+    color: #6b6b6b;
+    font-weight: 500;
+    /* white-space: nowrap; */
+}
+.filter-bar input,
+.filter-bar select {
+    height: 24px;
+    font-size: 14px;
+    line-height: 22px;
+    padding: 0 8px;
+    border: 1px solid #cccccc;
+    /* border-radius: 2px; */
+    background: #ffffff;
+}
+.filter-bar input {
+    width: 180px;
+}
+.filter-bar select {
+    width: 140px;
+}
+
+/* ─── Table Container ───────────────────────────────────────────────────────── */
+.table-container {
+    background: #ffffff;
+    overflow: hidden;
+}
+
+/* ─── Tables ────────────────────────────────────────────────────────────────── */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+thead {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+th,
+td {
+    padding: 10px 7px;
+    white-space: nowrap;
+    position: relative;
+    border: 1px solid #e0e0e0;
+}
+th {
+    font-weight: 500;
+    color: #6b6b6b;
+    font-size: 14px;
+}
+tr:last-child td {
+    /* border-bottom: none; */
+}
+/* tr:hover td {
+    background: #f5f5f5;
+} */
+
+/* ─── Column Resizer ───────────────────────────────────────────────────────── */
+.resizer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    cursor: col-resize;
+    background: transparent;
+    touch-action: none;
+}
+.resizer.isResizing {
+    background: #cccccc;
+}
+
+/* ─── Expand/Collapse Icon ──────────────────────────────────────────────────── */
+.toggle-button {
+    margin-right: 8px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 0px;
+}
+
+/* ─── Feature‐Row Grey Bar ─────────────────────────────────────────────────── */
+
+.grey-bar::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: calc(100% - 6px);
+    background: #bdbdbd;
+    /* border-radius: 1px; */
+}
+
+/* ─── Feature Table ───────────────────────────────────────────────────────── */
+
+.nested-conteiner {
+    padding: 0px 22px;
+}
+
+.feature-name {
+    display: flex;
+    align-items: center;
+}
+/* .feature-name-container {
+    padding-left: 7px;
+} */
+
+/* ─── Nested Tasks Table ───────────────────────────────────────────────────── */
+table td[colspan] > table {
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    /* margin-top: 4px; */
+    background: #ffffff;
+}
+table td[colspan] > table thead {
+    /* background: #f9f9f9; */
+}
+table td[colspan] > table th,
+table td[colspan] > table td {
+    padding: 10px 10px;
+    /* font-size: 13px; */
+    /* font-weight: 500; */
+    border-bottom: 1px solid #e0e0e0;
+}
+table td[colspan] > table tr:last-child td {
+    border-bottom: none;
+}
+/* table td[colspan] > table tr:hover td {
+    background: #f5f9ff;
+} slight tint */
+
+/* ─── Task‐Row Blue Bar ─────────────────────────────────────────────────────── */
+table td[colspan] > table > tbody > tr > td:first-child {
+    padding-left: 16px;
+}
+table td[colspan] > table > tbody > tr > td:first-child::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5px;
+    height: calc(100% - 6px);
+    background: #048dbb;
+    /* border-radius: 1px; */
+}
